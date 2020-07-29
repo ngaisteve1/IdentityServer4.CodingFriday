@@ -32,7 +32,7 @@ namespace Project.WebApi
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(o =>
             {
-                o.Authority = "https://localhost:44340";
+                o.Authority = "https://localhost:5001";
                 o.Audience = "myresourceapi";
                 o.RequireHttpsMetadata = false;
             });
@@ -41,6 +41,12 @@ namespace Project.WebApi
             {
                 options.AddPolicy("PublicSecure", policy => 
                 policy.RequireClaim("client_id", "secret_client_id"));
+
+                options.AddPolicy("UserSecure", policy => 
+                policy.RequireClaim("roleType", "CanReaddata"));
+
+                options.AddPolicy("AdminSecure", policy => 
+                policy.RequireClaim("roleType", "CanUpdatedata"));
             });
 
             services.AddControllers();

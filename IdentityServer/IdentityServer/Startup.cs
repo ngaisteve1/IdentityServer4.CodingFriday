@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,13 +15,15 @@ namespace IdentityServer
         {
             services.AddIdentityServer()
           .AddDeveloperSigningCredential()
-          .AddOperationalStore(options =>
-          {
-              options.EnableTokenCleanup = true;
-              options.TokenCleanupInterval = 30; // interval in seconds
-             })
+          //.AddOperationalStore(options =>
+          //{
+          //    options.EnableTokenCleanup = true;
+          //    options.TokenCleanupInterval = 30; // interval in seconds
+          //})
           .AddInMemoryApiResources(Config.GetApiResources())
-          .AddInMemoryClients(Config.GetClients());
+          .AddInMemoryClients(Config.GetClients())
+            .AddTestUsers(Config.GetUsers())
+            .AddProfileService<ProfileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

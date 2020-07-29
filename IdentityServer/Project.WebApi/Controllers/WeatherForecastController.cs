@@ -38,5 +38,19 @@ namespace Project.WebApi.Controllers
             })
             .ToArray();
         }
+
+        [Authorize(Policy = "UserSecure")]
+        [HttpGet("user")]
+        public IActionResult GetUserData()
+        {
+            return Ok("This is user data.");
+        }
+
+        [Authorize(Policy = "AdminSecure")]
+        [HttpGet("admin")]
+        public IActionResult GetAdminData()
+        {
+            return Ok("This is admin data.");
+        }
     }
 }
